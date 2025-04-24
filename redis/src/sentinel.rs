@@ -1058,7 +1058,7 @@ impl SentinelClient {
         })
     }
 
-    fn get_client(&mut self) -> RedisResult<Client> {
+    pub fn get_client(&mut self) -> RedisResult<Client> {
         match self.server_type {
             SentinelServerType::Master => self
                 .sentinel
