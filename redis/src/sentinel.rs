@@ -1058,7 +1058,8 @@ impl SentinelClient {
         })
     }
 
-    fn get_client(&mut self) -> RedisResult<Client> {
+    /// Returns a `redis::Client` considering the server type.
+    pub fn get_client(&mut self) -> RedisResult<Client> {
         match self.server_type {
             SentinelServerType::Master => self
                 .sentinel
@@ -1083,7 +1084,8 @@ impl SentinelClient {
 #[cfg(feature = "aio")]
 #[cfg_attr(docsrs, doc(cfg(feature = "aio")))]
 impl SentinelClient {
-    async fn async_get_client(&mut self) -> RedisResult<Client> {
+    /// Returns a `redis::Client` considering the server type.
+    pub async fn async_get_client(&mut self) -> RedisResult<Client> {
         match self.server_type {
             SentinelServerType::Master => {
                 self.sentinel
