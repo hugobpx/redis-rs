@@ -363,7 +363,7 @@ impl Pipeline {
         T::Error: Send,
         T::Error: ::std::fmt::Debug,
     {
-        const BUFFER_SIZE: usize = 50;
+        const BUFFER_SIZE: usize = 100_000;
         let (sender, mut receiver) = mpsc::channel(BUFFER_SIZE);
 
         let sink = PipelineSink::new(
