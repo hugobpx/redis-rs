@@ -1070,6 +1070,20 @@ impl SentinelClient {
         }
     }
 
+    /// Returns a `redis::Client` pointing to a Sentinel instance
+    pub async fn get_sentinel_client(&self) -> RedisResult<Client> {
+        for connection_info in &self.sentinel.sentinels_connection_info {
+            if let Ok(client) = Client::open(connection_info.clone()) {
+                return Ok(client);
+            }
+        }
+
+        Err(RedisError::from((
+            ErrorKind::InvalidClientConfig,
+            "Couldn't open connection to sentinel.",
+        )))
+    }
+
     /// Creates a new connection to the desired type of server (based on the
     /// service/master name, and the server type). We use a Sentinel to create a client
     /// for the target type of server, and then create a connection using that client.
